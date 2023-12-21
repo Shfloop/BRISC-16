@@ -15,6 +15,7 @@ BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building. It uses a cust
       -  during fetch to instruction memory, the program counter is directly connawected to instruction memory until a banked load/store happens where the bank offset = 1, then the fetch is stalled 1 cycle and nop inserted 
 
 ## Memory
+  2MB of total word addressed memory.
   -  0 - 0xffff - Data Memory
   -  0x10000 - 0x1ffff - Instruction Memory
   -  0x2000 - 0xfffff - extent of banked memory range can be used for anything
