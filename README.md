@@ -3,7 +3,7 @@ BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building Using 74hct chi
 
 
 ## Pipeline
-  Very similar to a risc v 5 stage pipeline. This isnt the exact schematic but it has the same pipeline ![alt text](https://www.alrj.org/images/riscv/Pipeline_summary.png)
+  Very similar to a RISC V 5 stage pipeline. 
 
 ## Registers
   16 total registers 11 used in actual build.  
@@ -60,4 +60,7 @@ BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building Using 74hct chi
 - `LUI` - Load Upper Immediate 
 - `JAL` - Jump and link with hardcoded return address register. Currently Ra is r10 but i might move it if i want to use a data register instead of an address register.
   
-  ![alt text](Stuff/InstructionFormat.png) 
+  ![alt text](Stuff/InstructionFormat.png)
+
+
+  This isnt the exact schematic but it has the same pipeline ![alt text](https://www.alrj.org/images/riscv/Pipeline_summary.png)
