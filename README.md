@@ -2,17 +2,17 @@
 BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building. It uses a custom 16-bit Load/Store Architecture **[Instruction Set](#instruction-set)**<br> 
 
 
-# Pipeline
-  very similar to a risc v 5 stage pipeline [insert png here] except im using flags instad
+## Pipeline
+  Very similar to a risc v 5 stage pipeline. This isnt the exact schematic but its close ![alt text](https://www.alrj.org/images/riscv/Pipeline_summary.png)
 ## Registers
   16 total registers 11 used in actual build.  
   
   Each register has an input bus connected to the write back stage and two output buses connected into 74hct574 at the decode stage for input into the alu. 
   
-  -  `Data Registers` r0-r7 - made from 74hct574 
-  -  `Address Registers` r8-r14 - these registers are made from 74hct193 chips and can be decremented or incremented by push and pop. 
+  -  `Data Registers` r0-r7 
+  -  `Address Registers` r8-r14 - can be decremented or incremented by push and pop. 
   -  `Program Counter` r15 - sepereated from the other registers to allow for write back during the alu stage and for simultaneous fetch and memory operation. 
-      -  during fetch to instruction memory, the program counter is directly connawected to instruction memory until a banked load/store happens where the bank offset = 1, then the fetch is stalled 1 cycle and nop inserted 
+      -  during fetch to instruction memory, the program counter is directly connected to instruction memory until a banked load/store happens where the bank offset = 1, then the fetch is stalled 1 cycle and nop inserted 
 
 ## Memory
   2MB of total word addressed memory.
@@ -25,10 +25,8 @@ BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building. It uses a cust
 
 ## Write Back/Forward line
   how the cpu keeps track of what data needs to get written back and if a data forward needs to happen into the alu
-  -  write back register during the memory and write back stage is xnored with both the current LHS and RHS input of the alu to see if the cpu is getting data from a register that hasn't been written back to yet. 
+  -  4 bit register write back value during the memory and write back stage is xnored with both the current LHS and RHS input register of the alu to see if the cpu is getting data from a register that hasn't been written back to yet. 
   
-
-
 ## Instruction Set
 16 main instructions plus 15 alu functions 
 - `Alu Operations`
@@ -56,7 +54,8 @@ BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building. It uses a cust
 - `JC` - Jump if carry flag
 - `JNC` - Jump if not carry flag
 - `JO` - Jump if overflow flag
-- `LUI` - Load Upper Immediate
+- `LUI` - Load Upper Immediate 
 - `JUMP` - pc += 12 bit sign extended offset
-- `JAL` -jump and link with hardcoded return address register.
-### test
+- `JAL` - Jump and link with hardcoded return address register.
+  
+  ![alt text](Stuff/InstructionFormat.png) 
