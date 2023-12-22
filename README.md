@@ -63,4 +63,4 @@ BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building Using 74hct chi
   ![alt text](Stuff/InstructionFormat.png)
 
 
-  This isnt the exact schematic but it has the same pipeline ![alt text](https://www.alrj.org/images/riscv/Pipeline_summary.png)
+  This isnt the exact schematic but it's close and has the same pipeline ![alt text](Stuff/PipelineImage.png)
