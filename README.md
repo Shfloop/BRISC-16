@@ -11,8 +11,8 @@ BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building Using 74hct chi
   Each register has an input bus connected to the write back stage and two output buses connected into 74hct574 at the decode stage for input into the alu. 
   
   -  `Data Registers` r0-r7 
-  -  `Address Registers` r8-r14 - can be decremented or incremented by push and pop. 
-  -  `Program Counter` r15 - sepereated from the other registers to allow for write back during the alu stage and for simultaneous fetch and memory operation. 
+  -  `Address Registers` r8-r15 - can be decremented or incremented by push and pop. 
+  -  `Program Counter` 16 bit ,seperated from other registers, and only affected by jump instructions. 
       -  during fetch to instruction memory, the program counter is directly connected to instruction memory until a banked load/store happens where the bank offset = 1, then the fetch is stalled 1 cycle and nop inserted 
 
 ## Alu
@@ -30,7 +30,7 @@ BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building Using 74hct chi
   -  4 bit rd value during memory and write back stage is xnored with the current LHS and RHS register input to see if the alu is getting data from a register that hasnt been written back to yet. 
   
 ## Instruction Set
-16 main instructions plus 15 alu functions 
+16 main instructions plus 15 alu and compare functions 
 - `Alu Operations`
   -  `NOP` 
   -  `ADD` 
@@ -44,6 +44,8 @@ BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building Using 74hct chi
   -  `NOT`
   -  `ADC`
   -  `SUBB`
+- `CMP Operations`
+  - Uses the same functions and inputs as the alu ops but doesnt write back to the register file.
 -  `ADI`: rd += sign extended 8-bit immediate 
 -  `LOAD/STORE` with offset:
    -  rd limited to first 8 registers
@@ -51,14 +53,19 @@ BRISC-16 is a 16-bit 5-stage pipelined CPU im currently building Using 74hct chi
    -  memory address = rs2 + sign extended 6-bit immediate
 - `LOAD/STORE`, `PUSH/POP` with banked offset
   -  16 bit addesss is extended by 4 bits provided by the immediate
--  `JUMP` - pc += 12 bit sign extended offset
-- `JZ` - Jump if zero flag
-- `JNZ` - Jump if not zero flag
-- `JC` - Jump if carry flag
-- `JNC` - Jump if not carry flag
-- `JO` - Jump if overflow flag
-- `LUI` - Load Upper Immediate 
-- `JAL` - Jump and link with hardcoded return address register. Currently Ra is r10 but i might move it if i want to use a data register instead of an address register.
+- `Branches`
+  - pc += 10 bit sign extended immeidate  
+  - `JZ` - Jump if zero flag
+  - `JNZ` - Jump if not zero flag
+  - `JC` - Jump if carry flag
+  - `JNC` - Jump if not carry flag
+  - `JO` - Jump if overflow flag
+  - `JNO` Jump if not overflow flag
+- `LUI` - Load Upper Immediate
+- `JUMP` - pc += 12 bit sign extended immediate
+- `JAL` - Jump and link with hardcoded return address register. Currently Ra is r0
+- `JR` - Jump from register, loads 16 bit value from a given register into pc
+- `JALR` - Jump from register and write program counter + 1 into RA
   
   ![alt text](Stuff/InstructionFormat.png)
 
